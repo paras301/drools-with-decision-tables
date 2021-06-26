@@ -1,0 +1,150 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'checkstyle'
+    id 'maven-publish'
+    id 'org.springframework.boot' version '2.4.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+ext {
+    project_group = 'com.irm.insight2.aiml'
+    project_artifact_url = "https://gitlab.com/api/v4/projects/24506460/packages/maven"
+    java_version = 14
+    springCloudGcpVersion = '2.0.0'
+    springCloudVersion = '2020.0.2'
+    droolsVersion = '7.54.0.Final'
+}
+if (project.hasProperty("project_version")) {
+    ext.project_version = project.property("project_version")
+}
+else {
+    ext.project_version = 'local'
+}
+if (project.hasProperty("coverage_minimum_rate")) {
+    ext.coverage_minimum_rate_value = (new BigDecimal(project.property("coverage_minimum_rate")))/100
+}
+else{
+    ext.coverage_minimum_rate_value = 0.95
+}
+
+version = project_version
+group =  project_group
+println "Building project ${project.name} in ${projectDir} with version ${version}, coverage ${coverage_minimum_rate_value}"
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(java_version)
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+	implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	compile 'com.google.cloud:google-cloud-nio:0.30.0-alpha'
+	compile 'javax.xml.bind:jaxb-api:2.3.0'
+	compile 'javax.activation:activation:1.1'
+	compile 'org.glassfish.jaxb:jaxb-runtime:2.3.0'
+	implementation 'com.google.cloud:spring-cloud-gcp-starter-secretmanager'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-inline:3.11.0'
+	implementation "org.drools:drools-core:${droolsVersion}"
+	implementation "org.drools:drools-mvel:${droolsVersion}"
+	implementation "org.drools:drools-compiler:${droolsVersion}"
+    implementation "org.drools:drools-decisiontables:${droolsVersion}"
+	compileOnly 'org.projectlombok:lombok:1.18.20'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "com.google.cloud:spring-cloud-gcp-dependencies:${springCloudGcpVersion}"
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		mavenBom "net.minidev:json-smart:2.4.1" //Added to resolve critical vulnerability
+	}
+}
+
+test {	
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+        classDumpDir = file("$buildDir/jacoco/classpathdumps")
+    }
+}
+
+check {
+    dependsOn checkstyleMain
+    dependsOn checkstyleTest
+    dependsOn jacocoTestCoverageVerification
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.enabled false
+        csv.enabled true
+        csv.destination file("${buildDir}/jacocoCsv")
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+jacoco {
+    toolVersion = "0.8.6"
+}
+
+jacocoTestCoverageVerification {
+    afterEvaluate {
+        getClassDirectories().setFrom(classDirectories.files.collect {
+            fileTree(dir: it, exclude:  ['**/application/**'])
+        })
+    }
+    
+    violationRules {
+        rule {
+            limit {
+                minimum = coverage_minimum_rate_value
+            }
+        }
+    }
+}
+
+publishing {
+    publications {
+        library(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url project_artifact_url
+            credentials(HttpHeaderCredentials) {
+                if (System.getenv("CI_JOB_TOKEN") == "") {
+                    name = "Private-Token"
+                    value = gitLabPrivateToken
+                }
+                else{
+                    name = 'Job-Token'
+                    value = System.getenv("CI_JOB_TOKEN")
+                }
+            }
+            authentication {
+                header(HttpHeaderAuthentication)
+            }
+        }
+    }
+}

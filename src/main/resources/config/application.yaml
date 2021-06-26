@@ -1,0 +1,5 @@
+spring:
+   application:
+      name: spring-rules-processor
+   server:
+port: 8080
