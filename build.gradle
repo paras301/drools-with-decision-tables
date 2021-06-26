@@ -47,10 +47,6 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	compile 'com.google.cloud:google-cloud-nio:0.30.0-alpha'
-	compile 'javax.xml.bind:jaxb-api:2.3.0'
-	compile 'javax.activation:activation:1.1'
-	compile 'org.glassfish.jaxb:jaxb-runtime:2.3.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mockito:mockito-inline:3.11.0'
 	implementation "org.drools:drools-core:${droolsVersion}"
@@ -60,14 +56,6 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok:1.18.20'
 	annotationProcessor 'org.projectlombok:lombok:1.18.20'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-}
-
-dependencyManagement {
-	imports {
-		mavenBom "com.google.cloud:spring-cloud-gcp-dependencies:${springCloudGcpVersion}"
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-		mavenBom "net.minidev:json-smart:2.4.1" //Added to resolve critical vulnerability
-	}
 }
 
 test {	
