@@ -8,7 +8,7 @@ plugins {
 }
 
 ext {
-    project_group = 'com.irm.insight2.aiml'
+    project_group = 'com.company'
     project_artifact_url = "https://gitlab.com/api/v4/projects/24506460/packages/maven"
     java_version = 14
     springCloudGcpVersion = '2.0.0'
