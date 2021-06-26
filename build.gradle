@@ -46,13 +46,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-	implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	compile 'com.google.cloud:google-cloud-nio:0.30.0-alpha'
 	compile 'javax.xml.bind:jaxb-api:2.3.0'
 	compile 'javax.activation:activation:1.1'
 	compile 'org.glassfish.jaxb:jaxb-runtime:2.3.0'
-	implementation 'com.google.cloud:spring-cloud-gcp-starter-secretmanager'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mockito:mockito-inline:3.11.0'
 	implementation "org.drools:drools-core:${droolsVersion}"
