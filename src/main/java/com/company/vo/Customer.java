@@ -16,9 +16,4 @@ public class Customer {
         this.type = type;
         this.years = years;
     }
-
-    public enum CustomerType {
-        INDIVIDUAL,
-        BUSINESS;
-    }
 }

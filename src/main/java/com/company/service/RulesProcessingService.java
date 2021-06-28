@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import com.company.vo.ApiRequest;
 import com.company.vo.Customer;
+import com.company.vo.CustomerType;
 
 @Slf4j
 @Service
@@ -44,7 +45,7 @@ public class RulesProcessingService {
 
         StatelessKieSession kSession = new KieHelper().addContent(rules, ResourceType.DRL).build().newStatelessKieSession();
 
-        Customer customer = new Customer(Customer.CustomerType.BUSINESS, 2);
+        Customer customer = new Customer(CustomerType.BUSINESS, 2);
 
         log.info("Executing rules ...");
 
