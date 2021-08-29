@@ -7,4 +7,9 @@ Here we'll have schema (POJO) and data inside the project itself. Future version
 
 v1 also refers to an example from https://www.baeldung.com/drools-excel
 
-Follow the documentation and story here: https://paras301.medium.com/working-with-drools-using-excel-sheet-supplied-from-outside-project-part-1-8be30afc8180
+Follow the documentation and story here: 
+
+https://paras301.medium.com/working-with-drools-using-excel-sheet-supplied-from-outside-project-part-1-8be30afc8180
+
+
+https://paras301.medium.com/working-with-drools-using-excel-sheet-decision-table-part-2-52936db848fb

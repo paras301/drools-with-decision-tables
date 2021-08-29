@@ -26,7 +26,7 @@ public class RulesProcessingService {
 
     public List<Data> applyRules(Data req) {
     	
-    	List<String> rules = rulesCompiler.compileRules();
+    	List<String> rules = rulesCompiler.compileRules(req.getRuleFilepath());
 
         KieHelper kh = new KieHelper();
         rules.forEach(r -> kh.addContent(r, ResourceType.DRL));
