@@ -3,3 +3,5 @@ spring:
       name: spring-rules-processor
    server:
 port: 8080
+logging.level:
+  com.company: INFO

@@ -13,7 +13,7 @@ ext {
     java_version = 14
     springCloudGcpVersion = '2.0.0'
     springCloudVersion = '2020.0.2'
-    droolsVersion = '7.54.0.Final'
+    droolsVersion = '7.58.0.Final'
 }
 if (project.hasProperty("project_version")) {
     ext.project_version = project.property("project_version")

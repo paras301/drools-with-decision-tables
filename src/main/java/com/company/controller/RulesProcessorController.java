@@ -1,13 +1,11 @@
 package com.company.controller;
 
 import com.company.service.RulesProcessingService;
-import com.company.vo.ApiRequest;
-import com.company.vo.Customer;
+import com.company.vo.Data;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/spring-rules-processor")
 public class RulesProcessorController {
@@ -23,8 +22,9 @@ public class RulesProcessorController {
 	private RulesProcessingService rulesProcessingService;
 
 	@PostMapping(value = "/applyrules")
-	public List<Customer> applyMapping(@RequestBody ApiRequest req) throws Exception {
-		List<Customer> c = rulesProcessingService.applyRules(req);
+	public List<Data> applyMapping(@RequestBody Data req) throws Exception {
+		log.info("Request data == " + req);
+		List<Data> c = rulesProcessingService.applyRules(req);
 		return c;
 	}
 
