@@ -1,7 +1,7 @@
 package com.company.controller;
 
 import com.company.service.RulesProcessingService;
-import com.company.vo.Data;
+import com.company.vo.Customer;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,10 +22,10 @@ public class RulesProcessorController {
 	private RulesProcessingService rulesProcessingService;
 
 	@PostMapping(value = "/applyrules")
-	public List<Data> applyMapping(@RequestBody Data req) throws Exception {
+	public Customer applyMapping(@RequestBody Customer req) throws Exception {
 		log.info("Request data == " + req);
-		List<Data> c = rulesProcessingService.applyRules(req);
-		return c;
+		req = rulesProcessingService.applyRules(req);
+		return req;
 	}
 
 }
