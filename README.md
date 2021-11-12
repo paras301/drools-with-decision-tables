@@ -9,7 +9,8 @@ v1 also refers to an example from https://www.baeldung.com/drools-excel
 
 Follow the documentation and story here: 
 
-https://paras301.medium.com/working-with-drools-using-excel-sheet-supplied-from-outside-project-part-1-8be30afc8180
+part-1 -- https://paras301.medium.com/working-with-drools-using-excel-sheet-supplied-from-outside-project-part-1-8be30afc8180
 
+part-2 -- https://paras301.medium.com/working-with-drools-using-excel-sheet-decision-table-part-2-52936db848fb
 
-https://paras301.medium.com/working-with-drools-using-excel-sheet-decision-table-part-2-52936db848fb
+part-3 -- https://paras301.medium.com/working-with-drools-using-excel-sheet-decision-table-part-3-high-performance-a96d62938797
